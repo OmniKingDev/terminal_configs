@@ -1,0 +1,161 @@
+format = """
+$c$cpp$rust$golang$python$lua$zig$nodejs$bun$deno${custom.bash}${custom.sql}${custom.html}${custom.css}${custom.markdown}${custom.json}$git_branch$git_status
+$directory [󰯆](bold #FF2F5F)  """
+
+add_newline = true
+
+
+# ============================================================
+# DIRECTORY
+# ============================================================
+
+[directory]
+style = "bold #FF2FD6"
+truncation_length = 1
+truncate_to_repo = false
+format = "[$path]($style)"
+
+
+# ============================================================
+# GIT
+# ============================================================
+
+[git_branch]
+symbol = " "
+style = "bold #39FFD1"
+format = " [$symbol$branch]($style)"
+
+[git_status]
+style = "bold #FF2FD6"
+format = ' [\[$all_status$ahead_behind\]]($style)'
+
+conflicted = "[!](bold #FF2F5F)[${count}](bold #F2C94C)"
+untracked = "[?](bold #00D4FF)[${count}](bold #F2C94C)"
+modified = "[✦](bold #FF2FD6)[${count}](bold #F2C94C)"
+staged = "[+](bold #39FFD1)[${count}](bold #F2C94C)"
+renamed = "[»](bold #00D4FF)[${count}](bold #F2C94C)"
+deleted = "[✘](bold #FF2F5F)[${count}](bold #F2C94C)"
+stashed = '[\$](bold #B300FF)[${count}](bold #F2C94C)'
+
+ahead = "[⇡](bold #00D4FF)[${count}](bold #F2C94C)"
+behind = "[⇣](bold #B300FF)[${count}](bold #F2C94C)"
+diverged = "[⇕⇡](bold #FF3377)[${ahead_count}](bold #F2C94C)[⇣](bold #FF3377)[${behind_count}](bold #F2C94C)"
+
+
+# ============================================================
+# COMPILED / SYSTEM LANGUAGES
+# ============================================================
+
+[c]
+symbol = " "
+style = "bold #E9967A"
+format = " [$symbol$version]($style)"
+
+[cpp]
+disabled = false
+symbol = " "
+style = "bold #E9967A"
+format = " [$symbol$version]($style)"
+
+[rust]
+symbol = "󱘗 "
+style = "bold #FF3377"
+format = " [$symbol$version]($style)"
+
+[golang]
+symbol = " "
+style = "bold #00D4FF"
+format = " [$symbol$version]($style)"
+
+[zig]
+symbol = " "
+style = "bold #FF3399"
+format = " [$symbol$version]($style)"
+
+
+# ============================================================
+# SCRIPTING
+# ============================================================
+
+[python]
+symbol = " "
+style = "bold #F2C94C"
+format = " [$symbol$version]($style)"
+
+[lua]
+symbol = " "
+style = "bold #8C33FF"
+format = " [$symbol$version]($style)"
+
+
+# ============================================================
+# JS / TS RUNTIMES
+# ============================================================
+
+[nodejs]
+symbol = " "
+style = "bold #FF00FF"
+format = " [$symbol$version]($style)"
+
+[bun]
+symbol = " "
+style = "bold #FF3377"
+format = " [$symbol$version]($style)"
+
+[deno]
+symbol = " "
+style = "bold #00D4FF"
+format = " [$symbol$version]($style)"
+
+
+# ============================================================
+# BASH
+#
+# Bash has a real runtime version, so query it directly.
+# ============================================================
+
+[custom.bash]
+detect_extensions = ["sh", "bash"]
+command = '''bash --version | head -n1 | awk '{print $4}' | cut -d\( -f1'''
+symbol = " "
+style = "bold #E8D0FF"
+format = " [$symbol v$output]($style)"
+
+
+# ============================================================
+# FILE TYPES WITHOUT A UNIVERSAL RUNTIME VERSION
+# ============================================================
+
+[custom.sql]
+detect_extensions = ["sql"]
+symbol = " "
+style = "bold #8C33FF"
+format = " [$symbol]($style)"
+
+[custom.html]
+detect_extensions = ["html", "htm"]
+symbol = " "
+style = "bold #E9967A"
+format = " [$symbol]($style)"
+
+[custom.css]
+detect_extensions = ["css"]
+symbol = " "
+style = "bold #00D4FF"
+format = " [$symbol]($style)"
+
+[custom.markdown]
+detect_extensions = ["md", "markdown"]
+symbol = " "
+style = "bold #E8D0FF"
+format = " [$symbol]($style)"
+
+[custom.json]
+detect_extensions = ["json", "jsonc"]
+symbol = " "
+style = "bold #FF3399"
+format = " [$symbol]($style)"
+
+
+[cmd_duration]
+disabled = true

@@ -1,0 +1,33 @@
+# ==============================================================================
+# PERSONAL ZSH FUNCTIONS
+# ==============================================================================
+
+promptstyle() {
+    local root="${XDG_CONFIG_HOME:-$HOME/.config}/starship"
+    local profiles="$root/profiles"
+    local active="$root/omni-os.toml"
+    local name="$1"
+
+    if [[ -z "$name" ]]; then
+        print "Available Starship profiles:"
+
+        local profile
+        for profile in "$profiles"/*.toml(N); do
+            print "  ${profile:t:r}"
+        done
+
+        return 0
+    fi
+
+    local profile="$profiles/$name.toml"
+
+    if [[ ! -f "$profile" ]]; then
+        print -u2 "promptstyle: profile '$name' does not exist"
+        print -u2 "Run 'promptstyle' to list available profiles."
+        return 1
+    fi
+
+    ln -sfn "profiles/$name.toml" "$active" || return 1
+
+    print "Starship profile: $name"
+}

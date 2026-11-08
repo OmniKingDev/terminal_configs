@@ -1,0 +1,60 @@
+format = """
+[╭─☠](bold purple)  $directory$git_branch$git_commit$git_state$git_status$git_metrics
+[╰─❯](bold purple) """
+
+add_newline = true
+
+
+[directory]
+style = "bold #FF2FD6"
+truncation_length = 3
+truncate_to_repo = false
+format = "[$path]($style)"
+
+
+[git_branch]
+symbol = " "
+style = "bold #39FFD1"
+format = " [$symbol$branch]($style)"
+
+
+[git_commit]
+commit_hash_length = 7
+only_detached = false
+tag_disabled = false
+tag_symbol = "  "
+style = "bold #8C33FF"
+format = " [@$hash$tag]($style)"
+
+
+[git_state]
+style = "bold #F2C94C"
+format = " [($state $progress_current/$progress_total)]($style)"
+
+
+[git_status]
+style = "bold #FF2FD6"
+format = ' [\[$all_status$ahead_behind\]]($style)'
+
+conflicted = "[!](bold #FF2F5F)[${count}](bold #F2C94C)"
+untracked = "[?](bold #00D4FF)[${count}](bold #F2C94C)"
+modified = "[✦](bold #FF2FD6)[${count}](bold #F2C94C)"
+staged = "[+](bold #39FFD1)[${count}](bold #F2C94C)"
+renamed = "[»](bold #00D4FF)[${count}](bold #F2C94C)"
+deleted = "[✘](bold #FF2F5F)[${count}](bold #F2C94C)"
+stashed = '[\$](bold #B300FF)[${count}](bold #F2C94C)'
+
+ahead = "[⇡](bold #00D4FF)[${count}](bold #F2C94C)"
+behind = "[⇣](bold #B300FF)[${count}](bold #F2C94C)"
+diverged = "[⇕⇡](bold #FF3377)[${ahead_count}](bold #F2C94C)[⇣](bold #FF3377)[${behind_count}](bold #F2C94C)"
+
+
+[git_metrics]
+disabled = false
+added_style = "bold #39FFD1"
+deleted_style = "bold #FF2F5F"
+format = " ([+$added]($added_style)) ([-$deleted]($deleted_style))"
+
+
+[cmd_duration]
+disabled = true

@@ -1,0 +1,72 @@
+format = """$status$directory$git_branch$git_status${custom.git_dirty}  """
+
+add_newline = false
+
+
+# Previous command status:
+# green skull = success
+# red skull   = failure
+[status]
+disabled = false
+format = "[$symbol]($style)  "
+
+symbol = "󰚌"
+success_symbol = "󰚌"
+not_executable_symbol = "󰚌"
+not_found_symbol = "󰚌"
+sigint_symbol = "󰚌"
+signal_symbol = "󰚌"
+
+style = "bold #FF2F5F"
+failure_style = "bold #FF2F5F"
+success_style = "bold #39FFD1"
+
+map_symbol = false
+
+
+# Current directory only.
+[directory]
+style = "bold #FF2FD6"
+truncation_length = 1
+truncate_to_repo = false
+format = "[$path]($style)"
+
+
+# Prime-style Git branch:
+#
+# git:[main]
+#      ^    ^
+#      gold brackets
+#
+# Branch itself remains red/pink.
+[git_branch]
+format = ' [git:](bold #39FFD1)[\[](bold #F2C94C)[$branch](bold #FF2F5F)[\]](bold #F2C94C)'
+
+[git_status]
+format = '( [$all_status$ahead_behind](bold #FF2F5F))'
+
+ahead = "⇡{count}"
+behind = "⇣{count}"
+diverged = "⇕ ⇡{ahead_count}|⇣{behind_count}"
+up_to_date = ""
+
+untracked = "‽"
+conflicted = "!"
+stashed = "＄"
+modified = "ꜝ"
+staged = "✜"
+renamed = "»"
+deleted = "✘"
+typechanged = ""
+
+# One dirty marker regardless of whether the repo contains
+# modified, staged, untracked, renamed, deleted, etc. files.
+[custom.git_dirty]
+when = 'git rev-parse --is-inside-work-tree >/dev/null 2>&1 && test -n "$(git status --porcelain)"'
+command = 'printf "〤"'
+style = "bold #F2C94C"
+format = ' [$output]($style)'
+ignore_timeout = true
+
+[cmd_duration]
+disabled = true
