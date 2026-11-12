@@ -31,3 +31,22 @@ promptstyle() {
 
     print "Starship profile: $name"
 }
+
+# Select a image for fastfetch to dispaly as logo
+fflogo() {
+    local pictures image
+
+    pictures=$(find "$HOME" -mindepth 1 -maxdepth 1 \
+        -type d -iname 'pictures' -print -quit)
+
+    [[ -n "$pictures" ]] || return 1
+
+    image=$(find "$pictures" -type f \
+        \( -iname '*.png' -o -iname '*.jpg' \
+        -o -iname '*.jpeg' -o -iname '*.webp' \) \
+        -print | fzf --prompt="Fastfetch image > ")
+
+    [[ -n "$image" ]] || return 1
+
+    printf '%s\n' "$image" > "$HOME/.config/fastfetch-logo"
+}
