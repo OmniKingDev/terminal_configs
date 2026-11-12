@@ -32,21 +32,43 @@ promptstyle() {
     print "Starship profile: $name"
 }
 
-# Select a image for fastfetch to dispaly as logo
+# Select an image for fastfetch to display as logo
 fflogo() {
     local pictures image
+    local finder
 
-    pictures=$(find "$HOME" -mindepth 1 -maxdepth 1 \
-        -type d -iname 'pictures' -print -quit)
+    if command -v fd >/dev/null 2>&1; then
+        finder="fd"
+    elif command -v find >/dev/null 2>&1; then
+        finder="find"
+    else
+        print -u2 "fflogo: neither 'fd' nor 'find' is available"
+        return 1
+    fi
 
-    [[ -n "$pictures" ]] || return 1
+    if [[ "$finder" == "fd" ]]; then
+        pictures=$(command fd -i -t d '^pictures$' "$HOME" --max-depth 1 -a | head -n1)
+    else
+        pictures=$(command find "$HOME" -mindepth 1 -maxdepth 1 \
+            -type d -iname 'pictures' -print -quit)
+    fi
 
-    image=$(find "$pictures" -type f \
-        \( -iname '*.png' -o -iname '*.jpg' \
-        -o -iname '*.jpeg' -o -iname '*.webp' \) \
-        -print | fzf --prompt="Fastfetch image > ")
+    [[ -n "$pictures" ]] || {
+        print -u2 "fflogo: no Pictures directory found in \$HOME"
+        return 1
+    }
+
+    if [[ "$finder" == "fd" ]]; then
+        image=$(command fd -i -t f . "$pictures" \
+            -e png -e jpg -e jpeg -e webp -a | fzf --prompt="Fastfetch image > ")
+    else
+        image=$(command find "$pictures" -type f \
+            \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+            -print | fzf --prompt="Fastfetch image > ")
+    fi
 
     [[ -n "$image" ]] || return 1
 
+    mkdir -p "$HOME/.config"
     printf '%s\n' "$image" > "$HOME/.config/fastfetch-logo"
 }
