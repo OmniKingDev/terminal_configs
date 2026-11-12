@@ -1,6 +1,17 @@
 # ==============================================================================
 # OMARCHY ZSH CONFIGURATION
 # ==============================================================================
+# Initialize Homebrew on macOS
+
+# Core Configuration Loop(Brew): For macOS compatibility
+if [[ "$OSTYPE" == darwin* ]]; then
+    for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+        if [[ -x "$brew_bin" ]]; then
+            eval "$("$brew_bin" shellenv)"
+            break
+        fi
+    done
+fi
 
 # Core Configuration Loop: Iterate through each item inside the zshrc directory
 for f in ~/.config/zshrc/*; do
@@ -20,6 +31,9 @@ done
 if [ -f ~/.zshrc_custom ]; then
     source ~/.zshrc_custom
 fi
+
+# Load personal Zsh functions
+[[ -f "$HOME/.config/zshrc/user/functions" ]] && source "$HOME/.config/zshrc/user/functions"
 
 # Prompt Interface: Initialize the Starship cross-shell status line
 export STARSHIP_CONFIG="$HOME/.config/starship/omni-os.toml"

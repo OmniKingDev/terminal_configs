@@ -10,7 +10,6 @@ plugins=(
     git
     sudo
     web-search
-    archlinux
     zsh-autosuggestions
     zsh-syntax-highlighting
     fast-syntax-highlighting
@@ -18,6 +17,11 @@ plugins=(
     copybuffer
     dirhistory
 )
+
+# Enable Arch Linux integration only on Arch-based systems
+if [[ -f /etc/arch-release ]]; then
+    plugins+=(archlinux)
+fi
 
 # Set-up oh-my-zsh
 source $ZSH/oh-my-zsh.sh
